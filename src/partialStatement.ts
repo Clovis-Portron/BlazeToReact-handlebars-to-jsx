@@ -12,8 +12,6 @@ const createAttribute = (pair: AST.HashPair): Babel.JSXAttribute | null => {
  * Converts partialStatement to JSXElement (call to component)
  */
 export const convertToComponentCall = (statement : AST.PartialStatement): Babel.JSXElement => {
-  console.log(statement);
-  console.log(statement.hash.pairs);
   const tagName = Babel.jsxIdentifier((<any>statement.name).original);
   const attributes = statement.hash.pairs.map((item: AST.HashPair) => createAttribute(item)).filter(Boolean) as Babel.JSXAttribute[]
   const isElementSelfClosing = true;

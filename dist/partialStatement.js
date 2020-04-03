@@ -11,8 +11,6 @@ var createAttribute = function (pair) {
  * Converts partialStatement to JSXElement (call to component)
  */
 exports.convertToComponentCall = function (statement) {
-    console.log(statement);
-    console.log(statement.hash.pairs);
     var tagName = Babel.jsxIdentifier(statement.name.original);
     var attributes = statement.hash.pairs.map(function (item) { return createAttribute(item); }).filter(Boolean);
     var isElementSelfClosing = true;
