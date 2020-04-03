@@ -11,6 +11,7 @@ var Babel = require("@babel/types");
 var elements_1 = require("./elements");
 var blockStatements_1 = require("./blockStatements");
 var comments_1 = require("./comments");
+var partialStatement_1 = require("./partialStatement");
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
  * Creates top-level expression or expression which need to wrap to JSX
@@ -46,6 +47,9 @@ exports.resolveStatement = function (statement) {
  */
 exports.resolveElementChild = function (statement) {
     switch (statement.type) {
+        case 'PartialStatement': {
+            return partialStatement_1.convertToComponentCall(statement);
+        }
         case 'ElementNode': {
             return elements_1.convertElement(statement);
         }

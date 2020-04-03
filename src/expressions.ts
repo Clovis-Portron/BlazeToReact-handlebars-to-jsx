@@ -3,6 +3,7 @@ import * as Babel                         from '@babel/types'
 import { createFragment, convertElement } from './elements'
 import { resolveBlockStatement }          from './blockStatements'
 import { createComment }                  from './comments'
+import { convertToComponentCall }         from './partialStatement';
 
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
@@ -51,6 +52,10 @@ export const resolveElementChild = (
   | Babel.JSXExpressionContainer
   | Array<Babel.JSXText | Babel.JSXExpressionContainer> => {
   switch (statement.type) {
+    case 'PartialStatement': {
+      return convertToComponentCall(statement);
+    }
+
     case 'ElementNode': {
       return convertElement(statement)
     }

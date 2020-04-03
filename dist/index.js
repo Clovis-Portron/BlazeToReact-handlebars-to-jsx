@@ -13,6 +13,7 @@ function compile(hbsCode, options) {
     var isModule = !!options.isModule;
     var includeImport = !!options.includeImport && isModule;
     var glimmerProgram = syntax_1.preprocess(hbsCode);
+    //return JSON.stringify(glimmerProgram);
     var babelProgram = program_1.createProgram(glimmerProgram, isComponent, isModule, includeImport);
     return generator_1.default(babelProgram).code;
 }
