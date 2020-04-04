@@ -3,11 +3,15 @@ import * as Babel                                                          from 
 import { resolveExpression, createRootChildren, createPath, appendToPath } from './expressions'
 import { createFragment }                                                  from './elements'
 import { DEFAULT_NAMESPACE_NAME, DEFAULT_KEY_NAME }                        from './constants'
+import { convertMultiplePathExpressionToFunctionExpression } from './FunctionExpression';
 
 /**
  * Resolves block type
  */
 export const resolveBlockStatement = (blockStatement: Glimmer.BlockStatement) => {
+  
+  blockStatement.params = convertMultiplePathExpressionToFunctionExpression(blockStatement.params);
+  console.log(blockStatement.params);
   switch (blockStatement.path.original) {
     case 'if': {
       return createConditionStatement(blockStatement, false)
@@ -34,7 +38,8 @@ export const createConditionStatement = (
   blockStatement: Glimmer.BlockStatement,
   invertCondition: boolean
 ): Babel.ConditionalExpression | Babel.LogicalExpression => {
-  const { program, inverse } = blockStatement
+  const { program, inverse } = blockStatement;
+
   let boolCondSubject: Babel.CallExpression | Babel.UnaryExpression = Babel.callExpression(
     Babel.identifier('Boolean'),
     [resolveExpression(blockStatement.params[0])]
