@@ -1,31 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var blockInAttributeStatement_1 = require("./blockInAttributeStatement");
+var FunctionExpression_1 = require("./FunctionExpression");
 exports.convertToSpacebars = function (program) {
     var convert = function (statements) { return statements.map(function (statement) {
         switch (statement.type) {
             case "ElementNode": {
-                statement.children = convert(statement.children);
-                statement.attributes.forEach(function (attrNode) {
+                var elementNode = statement;
+                elementNode.children = convert(elementNode.children);
+                elementNode.attributes.forEach(function (attrNode) {
                     attrNode.value = convert([attrNode.value])[0];
                 });
-                break;
+                return elementNode;
             }
             case "BlockStatement": {
-                statement.program.body = convert(statement.program.body);
-                break;
+                var blockStatement = statement;
+                blockStatement.program.body = convert(blockStatement.program.body);
+                blockStatement.params = FunctionExpression_1.convertMultiplePathExpressionToFunctionExpression(blockStatement, blockStatement.params);
+                if (blockStatement.inverse) {
+                    blockStatement.inverse.body = convert(blockStatement.inverse.body);
+                }
+                return blockStatement;
             }
             case "MustacheStatement": {
-                if (statement.custom) {
+                var mustacheStatement = statement;
+                // Gestion particulière des Blocks dans Attributs
+                if (mustacheStatement.custom) {
                     var custom = statement;
+                    custom.params = FunctionExpression_1.convertMultiplePathExpressionToFunctionExpression(custom, custom.params);
                     custom.program.body = custom.program.body.map(function (e) { return blockInAttributeStatement_1.AdaptCustomMustacheStatement(e); });
+                    custom.program.body = convert(custom.program.body);
+                    if (custom.inverse) {
+                        custom.inverse.body = convert(custom.inverse.body);
+                    }
                     return custom;
                 }
-                break;
+                // Gestion des paths avec params (fonctions)
+                mustacheStatement.path = FunctionExpression_1.convertPathWithParamsToFunctionExpression(mustacheStatement);
+                return mustacheStatement;
             }
             case "ConcatStatement": {
+                var concatStatement = statement;
                 //console.log(statement);
-                statement.parts = convert(statement.parts);
+                concatStatement.parts = convert(concatStatement.parts);
                 break;
             }
         }

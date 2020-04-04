@@ -9,35 +9,53 @@ import {
   AdaptCustomMustacheStatement
 } from "./blockInAttributeStatement";
 
+import { convertMultiplePathExpressionToFunctionExpression, convertPathWithParamsToFunctionExpression, FunctionExpression } from './FunctionExpression';
+
 export const convertToSpacebars = (program: Glimmer.Program): Glimmer.Program => {
-    const convert = (statements: Glimmer.Statement[]) => statements.map((statement: Glimmer.Statement | Glimmer.ConcatStatement) => {
+    const convert = (statements: Glimmer.Statement[]) => statements.map((statement: FunctionExpression | Glimmer.Statement | Glimmer.ConcatStatement) => {
       switch (statement.type) {
           case "ElementNode": {
-            statement.children = convert(statement.children);
-            statement.attributes.forEach((attrNode) => {
+            const elementNode = <Glimmer.ElementNode>statement;
+            elementNode.children = convert(elementNode.children);
+            elementNode.attributes.forEach((attrNode) => {
               attrNode.value = convert([<any>attrNode.value])[0];
             });
-            break;
+            return elementNode;
           }
           case "BlockStatement": {
-            statement.program.body = convert(statement.program.body);
-            break;
+            const blockStatement = <Glimmer.BlockStatement>statement;
+            blockStatement.program.body = convert(blockStatement.program.body);
+            blockStatement.params = convertMultiplePathExpressionToFunctionExpression(blockStatement, blockStatement.params);
+            if(blockStatement.inverse) {
+              blockStatement.inverse.body = convert(blockStatement.inverse.body);
+            }
+            return blockStatement;
           }
           case "MustacheStatement": {
-            if ((<any>statement).custom) {
-              const custom = < any > statement;
+            const mustacheStatement = <Glimmer.MustacheStatement>statement;
+            // Gestion particulière des Blocks dans Attributs
+            if ((<any>mustacheStatement).custom) {
+              const custom = <Glimmer.BlockStatement>statement;
+              custom.params = convertMultiplePathExpressionToFunctionExpression(custom, custom.params);
               custom.program.body = custom.program.body.map((e: Glimmer.Statement) => AdaptCustomMustacheStatement(e));
+              custom.program.body = convert(custom.program.body);
+              if(custom.inverse) {
+                custom.inverse.body = convert(custom.inverse.body);
+              }
               return custom;
             }
-            break;
+            // Gestion des paths avec params (fonctions)
+            mustacheStatement.path = <any>convertPathWithParamsToFunctionExpression(mustacheStatement);
+            return mustacheStatement;
           }
           case "ConcatStatement": {
+            const concatStatement = <Glimmer.ConcatStatement>statement;
             //console.log(statement);
-            statement.parts = convert(statement.parts);
+            concatStatement.parts = convert(concatStatement.parts);
             break;
           }
         }
-        return statement;
+        return <any>statement;
       });
       program.body = convert(program.body);
       //console.log(JSON.stringify(program.body, null, 2));

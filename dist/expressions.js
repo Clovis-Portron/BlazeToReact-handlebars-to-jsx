@@ -74,6 +74,13 @@ exports.resolveElementChild = function (statement) {
  */
 exports.resolveExpression = function (expression) {
     switch (expression.type) {
+        case 'FunctionExpression': {
+            var fun = expression;
+            var paths = fun.parts.map(function (part) { return exports.resolveExpression(part); });
+            var callee = paths.splice(0, 1)[0];
+            //console.log(expression);
+            return Babel.callExpression(callee, paths);
+        }
         case 'PathExpression': {
             return exports.createPath(expression);
         }
