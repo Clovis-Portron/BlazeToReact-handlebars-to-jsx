@@ -22,7 +22,7 @@ export const resolveStatement = (statement: Glimmer.Statement) => {
 
     case 'MustacheStatement': {
       if((<any>statement).custom) {
-        return resolveBlockInAttributeStatement(<any>statement);
+        return resolveBlockStatement(<any>statement);
       }
       return resolveExpression((<any>statement).path);
     }

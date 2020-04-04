@@ -10,8 +10,6 @@ import { convertMultiplePathExpressionToFunctionExpression } from './FunctionExp
  */
 export const resolveBlockStatement = (blockStatement: Glimmer.BlockStatement) => {
   
-  blockStatement.params = convertMultiplePathExpressionToFunctionExpression(blockStatement.params);
-  console.log(blockStatement.params);
   switch (blockStatement.path.original) {
     case 'if': {
       return createConditionStatement(blockStatement, false)

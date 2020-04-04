@@ -4,13 +4,10 @@ var Babel = require("@babel/types");
 var expressions_1 = require("./expressions");
 var elements_1 = require("./elements");
 var constants_1 = require("./constants");
-var FunctionExpression_1 = require("./FunctionExpression");
 /**
  * Resolves block type
  */
 exports.resolveBlockStatement = function (blockStatement) {
-    blockStatement.params = FunctionExpression_1.convertMultiplePathExpressionToFunctionExpression(blockStatement.params);
-    console.log(blockStatement.params);
     switch (blockStatement.path.original) {
         case 'if': {
             return exports.createConditionStatement(blockStatement, false);
