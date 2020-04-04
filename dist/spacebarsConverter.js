@@ -31,8 +31,10 @@ exports.convertToSpacebars = function (program) {
                     custom.program.body = custom.program.body.map(function (e) { return blockInAttributeStatement_1.AdaptCustomMustacheStatement(e); });
                     custom.program.body = convert(custom.program.body);
                     if (custom.inverse) {
+                        custom.inverse.body = custom.inverse.body.map(function (e) { return blockInAttributeStatement_1.AdaptCustomMustacheStatement(e); });
                         custom.inverse.body = convert(custom.inverse.body);
                     }
+                    console.log(custom.inverse);
                     return custom;
                 }
                 // Gestion des paths avec params (fonctions)

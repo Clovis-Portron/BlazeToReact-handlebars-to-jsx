@@ -40,8 +40,11 @@ export const convertToSpacebars = (program: Glimmer.Program): Glimmer.Program =>
               custom.program.body = custom.program.body.map((e: Glimmer.Statement) => AdaptCustomMustacheStatement(e));
               custom.program.body = convert(custom.program.body);
               if(custom.inverse) {
+                custom.inverse.body = custom.inverse.body.map((e: Glimmer.Statement) => AdaptCustomMustacheStatement(e));
                 custom.inverse.body = convert(custom.inverse.body);
               }
+              console.log(custom.inverse);
+
               return custom;
             }
             // Gestion des paths avec params (fonctions)
