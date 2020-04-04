@@ -4,7 +4,7 @@ import { createFragment, convertElement } from './elements'
 import { resolveBlockStatement }          from './blockStatements'
 import { createComment }                  from './comments'
 import { convertToComponentCall }         from './partialStatement';
-
+import { resolveBlockInAttributeStatement } from './blockInAttributeStatement';
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
  * Creates top-level expression or expression which need to wrap to JSX
@@ -13,21 +13,23 @@ import { convertToComponentCall }         from './partialStatement';
 export const resolveStatement = (statement: Glimmer.Statement) => {
   switch (statement.type) {
     case 'ElementNode': {
-      return convertElement(statement)
+      return convertElement(<any>statement)
     }
 
     case 'TextNode': {
-      return Babel.stringLiteral(statement.chars)
+      return Babel.stringLiteral((<any>statement).chars)
     }
 
     case 'MustacheStatement': {
-      return resolveExpression(statement.path)
+      if((<any>statement).custom) {
+        return resolveBlockInAttributeStatement(<any>statement);
+      }
+      return resolveExpression((<any>statement).path);
     }
 
     case 'BlockStatement': {
-      return resolveBlockStatement(statement)
+      return resolveBlockStatement(<any>statement)
     }
-
     case 'MustacheCommentStatement':
     case 'CommentStatement': {
       throw new Error('Top level comments currently is not supported')

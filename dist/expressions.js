@@ -12,6 +12,7 @@ var elements_1 = require("./elements");
 var blockStatements_1 = require("./blockStatements");
 var comments_1 = require("./comments");
 var partialStatement_1 = require("./partialStatement");
+var blockInAttributeStatement_1 = require("./blockInAttributeStatement");
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
  * Creates top-level expression or expression which need to wrap to JSX
@@ -26,6 +27,9 @@ exports.resolveStatement = function (statement) {
             return Babel.stringLiteral(statement.chars);
         }
         case 'MustacheStatement': {
+            if (statement.custom) {
+                return blockInAttributeStatement_1.resolveBlockInAttributeStatement(statement);
+            }
             return exports.resolveExpression(statement.path);
         }
         case 'BlockStatement': {
