@@ -12,6 +12,13 @@ var elements_1 = require("./elements");
 var blockStatements_1 = require("./blockStatements");
 var comments_1 = require("./comments");
 var partialStatement_1 = require("./partialStatement");
+exports.resolveStatementParametersExpression = function (expressions) {
+    var paths = expressions.map(function (part) { return exports.resolveExpression(part); });
+    var callee = paths.splice(0, 1)[0];
+    if (Babel.isLiteral(callee))
+        throw new Error('callee must be Identifier or MemberExpression');
+    return Babel.callExpression(callee, paths);
+};
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
  * Creates top-level expression or expression which need to wrap to JSX
@@ -26,9 +33,6 @@ exports.resolveStatement = function (statement) {
             return Babel.stringLiteral(statement.chars);
         }
         case 'MustacheStatement': {
-            if (statement.custom) {
-                return blockStatements_1.resolveBlockStatement(statement);
-            }
             return exports.resolveExpression(statement.path);
         }
         case 'BlockStatement': {
@@ -74,13 +78,6 @@ exports.resolveElementChild = function (statement) {
  */
 exports.resolveExpression = function (expression) {
     switch (expression.type) {
-        case 'FunctionExpression': {
-            var fun = expression;
-            var paths = fun.parts.map(function (part) { return exports.resolveExpression(part); });
-            var callee = paths.splice(0, 1)[0];
-            //console.log(expression);
-            return Babel.callExpression(callee, paths);
-        }
         case 'PathExpression': {
             return exports.createPath(expression);
         }

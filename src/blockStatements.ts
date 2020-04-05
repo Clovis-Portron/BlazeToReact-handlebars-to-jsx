@@ -1,6 +1,6 @@
 import { AST as Glimmer }                                                  from '@glimmer/syntax'
 import * as Babel                                                          from '@babel/types'
-import { resolveExpression, createRootChildren, createPath, appendToPath } from './expressions'
+import { resolveStatementParametersExpression, resolveExpression, createRootChildren, createPath, appendToPath } from './expressions'
 import { createFragment }                                                  from './elements'
 import { DEFAULT_NAMESPACE_NAME, DEFAULT_KEY_NAME }                        from './constants'
 
@@ -39,7 +39,7 @@ export const createConditionStatement = (
 
   let boolCondSubject: Babel.CallExpression | Babel.UnaryExpression = Babel.callExpression(
     Babel.identifier('Boolean'),
-    [resolveExpression(blockStatement.params[0])]
+    [blockStatement.params.length == 1 ? resolveExpression(blockStatement.params[0]) : resolveStatementParametersExpression(blockStatement.params)]
   )
 
   if (invertCondition) {

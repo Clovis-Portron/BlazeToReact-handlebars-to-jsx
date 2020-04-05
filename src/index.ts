@@ -33,8 +33,11 @@ export function compile(
   const isComponent = !!options.isComponent
   const isModule = !!options.isModule
   const includeImport = !!options.includeImport && isModule
+  //const code = preprocess(hbsCode)
+  //console.log(JSON.stringify(code, null, 2));
+  //return;
 
-  const glimmerProgram = convertToSpacebars(preprocess(hbsCode));
+  const glimmerProgram = preprocess(hbsCode);
   //return JSON.stringify(glimmerProgram);
   const babelProgram: Babel.Program = createProgram(glimmerProgram, isComponent, isModule, includeImport)
 

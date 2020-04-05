@@ -4,7 +4,15 @@ import { createFragment, convertElement } from './elements'
 import { resolveBlockStatement }          from './blockStatements'
 import { createComment }                  from './comments'
 import { convertToComponentCall }         from './partialStatement';
-import { FunctionExpression } from './FunctionExpression';
+
+export const resolveStatementParametersExpression = (expressions: Glimmer.Expression[]) : Babel.CallExpression => {
+  const paths: (Babel.Identifier | Babel.MemberExpression | Babel.Literal)[] = expressions.map(part => resolveExpression(part));
+  const callee: Babel.Identifier | Babel.MemberExpression | Babel.Literal = paths.splice(0, 1)[0];
+  if(Babel.isLiteral(callee)) throw new Error('callee must be Identifier or MemberExpression');
+  return Babel.callExpression(callee, paths);
+}
+
+
 /**
  * Converts the Handlebars expression to NON-JSX JS-compatible expression.
  * Creates top-level expression or expression which need to wrap to JSX
@@ -21,9 +29,6 @@ export const resolveStatement = (statement: Glimmer.Statement) => {
     }
 
     case 'MustacheStatement': {
-      if((<any>statement).custom) {
-        return resolveBlockStatement(<any>statement);
-      }
       return resolveExpression((<any>statement).path);
     }
 
@@ -82,17 +87,9 @@ export const resolveElementChild = (
  * Converts Hbs expression to Babel expression
  */
 export const resolveExpression = (
-  expression: Glimmer.Expression | FunctionExpression
-): Babel.Literal | Babel.Identifier | Babel.MemberExpression | Babel.CallExpression => {
+  expression: Glimmer.Expression
+): Babel.Literal | Babel.Identifier | Babel.MemberExpression => {
   switch (expression.type) {
-    case 'FunctionExpression': {
-      const fun = <FunctionExpression>expression;
-      const paths: (Babel.Identifier | Babel.MemberExpression)[] = <any>fun.parts.map(part => resolveExpression(part));
-      const callee: Babel.Identifier | Babel.MemberExpression = paths.splice(0, 1)[0];
-      //console.log(expression);
-      return Babel.callExpression(callee, paths);
-    }
-
     case 'PathExpression': {
       return createPath(<Glimmer.PathExpression>expression)
     }
