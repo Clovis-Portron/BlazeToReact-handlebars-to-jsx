@@ -7,9 +7,9 @@ import { convertToComponentCall }         from './partialStatement';
 import { resolveMustacheStatement }       from './mustacheStatements';
 
 export const resolveStatementParametersExpression = (expressions: Glimmer.Expression[]) : Babel.CallExpression => {
-  const paths: (Babel.Identifier | Babel.MemberExpression | Babel.Literal)[] = expressions.map(part => resolveExpression(part));
-  const callee: Babel.Identifier | Babel.MemberExpression | Babel.Literal = paths.splice(0, 1)[0];
-  if(Babel.isLiteral(callee)) throw new Error('callee must be Identifier or MemberExpression');
+  const paths: (Babel.Identifier | Babel.MemberExpression | Babel.Literal | Babel.CallExpression)[] = expressions.map(part => resolveExpression(part));
+  const callee: Babel.Identifier | Babel.MemberExpression | Babel.Literal | Babel.CallExpression = paths.splice(0, 1)[0];
+  if(Babel.isLiteral(callee)) throw new Error('callee must be Identifier, MemberExpression or CallExpression');
   return Babel.callExpression(callee, paths);
 }
 
@@ -89,8 +89,15 @@ export const resolveElementChild = (
  */
 export const resolveExpression = (
   expression: Glimmer.Expression
-): Babel.Literal | Babel.Identifier | Babel.MemberExpression => {
+): Babel.Literal | Babel.Identifier | Babel.MemberExpression | Babel.CallExpression => {
   switch (expression.type) {
+    case 'SubExpression': {
+      // Une subExpression est comparable à un MustacheStatement
+      const copycat: any = expression;
+      copycat.type = 'MustacheStatement';
+      return resolveMustacheStatement(<Glimmer.MustacheStatement>copycat);
+    }
+
     case 'PathExpression': {
       return createPath(<Glimmer.PathExpression>expression)
     }

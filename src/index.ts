@@ -3,6 +3,7 @@ import { preprocess }    from '@glimmer/syntax'
 import generate          from '@babel/generator'
 import * as Babel        from '@babel/types'
 import { createProgram } from './program'
+import { adaptForSpacebars } from './spacebarsAdapter'; 
 
 /**
  * Converts Handlebars code to JSX code
@@ -36,7 +37,7 @@ export function compile(
   //console.log(JSON.stringify(code, null, 2));
   //return;
 
-  const glimmerProgram = preprocess(hbsCode);
+  const glimmerProgram = adaptForSpacebars(preprocess(hbsCode));
   //return JSON.stringify(glimmerProgram);
   const babelProgram: Babel.Program = createProgram(glimmerProgram, isComponent, isModule, includeImport)
 

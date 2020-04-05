@@ -17,7 +17,7 @@ exports.resolveStatementParametersExpression = function (expressions) {
     var paths = expressions.map(function (part) { return exports.resolveExpression(part); });
     var callee = paths.splice(0, 1)[0];
     if (Babel.isLiteral(callee))
-        throw new Error('callee must be Identifier or MemberExpression');
+        throw new Error('callee must be Identifier, MemberExpression or CallExpression');
     return Babel.callExpression(callee, paths);
 };
 /**
@@ -79,6 +79,12 @@ exports.resolveElementChild = function (statement) {
  */
 exports.resolveExpression = function (expression) {
     switch (expression.type) {
+        case 'SubExpression': {
+            // Une subExpression est comparable à un MustacheStatement
+            var copycat = expression;
+            copycat.type = 'MustacheStatement';
+            return mustacheStatements_1.resolveMustacheStatement(copycat);
+        }
         case 'PathExpression': {
             return exports.createPath(expression);
         }
