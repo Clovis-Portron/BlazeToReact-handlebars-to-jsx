@@ -3,7 +3,6 @@ import { preprocess }    from '@glimmer/syntax'
 import generate          from '@babel/generator'
 import * as Babel        from '@babel/types'
 import { createProgram } from './program'
-import { convertToSpacebars } from './spacebarsConverter';
 
 /**
  * Converts Handlebars code to JSX code

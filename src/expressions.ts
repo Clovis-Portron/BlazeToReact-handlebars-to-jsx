@@ -4,6 +4,7 @@ import { createFragment, convertElement } from './elements'
 import { resolveBlockStatement }          from './blockStatements'
 import { createComment }                  from './comments'
 import { convertToComponentCall }         from './partialStatement';
+import { resolveMustacheStatement }       from './mustacheStatements';
 
 export const resolveStatementParametersExpression = (expressions: Glimmer.Expression[]) : Babel.CallExpression => {
   const paths: (Babel.Identifier | Babel.MemberExpression | Babel.Literal)[] = expressions.map(part => resolveExpression(part));
@@ -29,7 +30,7 @@ export const resolveStatement = (statement: Glimmer.Statement) => {
     }
 
     case 'MustacheStatement': {
-      return resolveExpression((<any>statement).path);
+      return resolveMustacheStatement(<any>statement);
     }
 
     case 'BlockStatement': {

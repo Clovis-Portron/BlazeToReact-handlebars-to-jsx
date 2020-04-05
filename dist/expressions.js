@@ -12,6 +12,7 @@ var elements_1 = require("./elements");
 var blockStatements_1 = require("./blockStatements");
 var comments_1 = require("./comments");
 var partialStatement_1 = require("./partialStatement");
+var mustacheStatements_1 = require("./mustacheStatements");
 exports.resolveStatementParametersExpression = function (expressions) {
     var paths = expressions.map(function (part) { return exports.resolveExpression(part); });
     var callee = paths.splice(0, 1)[0];
@@ -33,7 +34,7 @@ exports.resolveStatement = function (statement) {
             return Babel.stringLiteral(statement.chars);
         }
         case 'MustacheStatement': {
-            return exports.resolveExpression(statement.path);
+            return mustacheStatements_1.resolveMustacheStatement(statement);
         }
         case 'BlockStatement': {
             return blockStatements_1.resolveBlockStatement(statement);
