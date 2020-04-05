@@ -93,9 +93,7 @@ export const resolveExpression = (
   switch (expression.type) {
     case 'SubExpression': {
       // Une subExpression est comparable à un MustacheStatement
-      const copycat: any = expression;
-      copycat.type = 'MustacheStatement';
-      return resolveMustacheStatement(<Glimmer.MustacheStatement>copycat);
+      return resolveMustacheStatement(expression);
     }
 
     case 'PathExpression': {

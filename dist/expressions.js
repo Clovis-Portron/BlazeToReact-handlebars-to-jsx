@@ -81,9 +81,7 @@ exports.resolveExpression = function (expression) {
     switch (expression.type) {
         case 'SubExpression': {
             // Une subExpression est comparable à un MustacheStatement
-            var copycat = expression;
-            copycat.type = 'MustacheStatement';
-            return mustacheStatements_1.resolveMustacheStatement(copycat);
+            return mustacheStatements_1.resolveMustacheStatement(expression);
         }
         case 'PathExpression': {
             return exports.createPath(expression);

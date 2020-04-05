@@ -1,7 +1,7 @@
 import { AST as Glimmer } from '@glimmer/syntax';
 import { resolveExpression, resolveStatementParametersExpression } from './expressions';
 
-export const resolveMustacheStatement = (statement: Glimmer.MustacheStatement) => {
+export const resolveMustacheStatement = (statement: Glimmer.MustacheStatement | Glimmer.SubExpression) => {
   if(statement.params.length > 0) {
     return resolveStatementParametersExpression([statement.path, ...statement.params]);
   }
