@@ -19,6 +19,8 @@ function compile(hbsCode, options) {
     var glimmerProgram = spacebarsAdapter_1.adaptForSpacebars(syntax_1.preprocess(hbsCode));
     //return JSON.stringify(glimmerProgram);
     var babelProgram = program_1.createProgram(glimmerProgram, isComponent, isModule, includeImport);
+    if (options.isJSX)
+        return babelProgram;
     return generator_1.default(babelProgram).code;
 }
 exports.compile = compile;

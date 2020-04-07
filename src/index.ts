@@ -20,12 +20,13 @@ export function compile(
     isComponent?: boolean
     isModule?: boolean
     includeImport?: boolean
+    isJSX?: boolean
   }
 ): string
 export function compile(
   hbsCode: string,
-  options: boolean | { isComponent?: boolean; isModule?: boolean; includeImport?: boolean } = true
-): string {
+  options: boolean | { isComponent?: boolean; isModule?: boolean; includeImport?: boolean; isJSX?: boolean } = true
+): string | any {
   if (typeof options === 'boolean') {
     return compile(hbsCode, { isComponent: options })
   }
@@ -37,9 +38,12 @@ export function compile(
   //console.log(JSON.stringify(code, null, 2));
   //return;
 
-  const glimmerProgram = adaptForSpacebars(preprocess(hbsCode));
+  const glimmerProgram = adaptForSpacebars(preprocess(hbsCode))
   //return JSON.stringify(glimmerProgram);
   const babelProgram: Babel.Program = createProgram(glimmerProgram, isComponent, isModule, includeImport)
+
+  if(options.isJSX) return babelProgram
+
 
   return generate(babelProgram).code
 }
