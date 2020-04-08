@@ -9,9 +9,9 @@ exports.adaptForSpacebars = function (program) {
             return statement;
         var keys = syntax_1.visitorKeys[statement.type];
         // Gestion du tag template
-        if (statement.type == 'ElementNode' && statement.tag === 'template') {
-            statement.tag = 'div';
-        }
+        /*if(statement.type == 'ElementNode' && statement.tag === 'template') {
+          statement.tag = 'div';
+        }*/
         keys.forEach(function (key) {
             if (util_1.isArray(statement[key])) {
                 statement[key] = convert(statement[key]);

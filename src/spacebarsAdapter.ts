@@ -9,10 +9,10 @@ export const adaptForSpacebars = (program :  Glimmer.Program) => {
     const keys = visitorKeys[statement.type];
 
     // Gestion du tag template
-    if(statement.type == 'ElementNode' && statement.tag === 'template') {
+    /*if(statement.type == 'ElementNode' && statement.tag === 'template') {
       statement.tag = 'div';
-    }
-
+    }*/
+    
     keys.forEach((key: string) => {
       if(isArray((<any>statement)[key])) {
         (<any>statement)[key] = convert((<any>statement)[key]);
