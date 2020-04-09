@@ -21,6 +21,10 @@ export const resolveStatementParametersExpression = (expressions: Glimmer.Expres
  */
 export const resolveStatement = (statement: Glimmer.Statement) => {
   switch (statement.type) {
+    case 'PartialStatement': {
+      return convertToComponentCall(statement)
+    }
+
     case 'ElementNode': {
       return convertElement(<any>statement)
     }
@@ -30,7 +34,7 @@ export const resolveStatement = (statement: Glimmer.Statement) => {
     }
 
     case 'MustacheStatement': {
-      return resolveMustacheStatement(<any>statement);
+      return resolveMustacheStatement(<any>statement)
     }
 
     case 'BlockStatement': {
@@ -42,7 +46,7 @@ export const resolveStatement = (statement: Glimmer.Statement) => {
     }
 
     default: {
-      throw new Error(`Unexpected expression "${statement.type}"`)
+      throw new Error(`Unexpected expression "${(<any>statement).type}"`)
     }
   }
 }
@@ -61,7 +65,7 @@ export const resolveElementChild = (
   | Array<Babel.JSXText | Babel.JSXExpressionContainer> => {
   switch (statement.type) {
     case 'PartialStatement': {
-      return convertToComponentCall(statement);
+      return convertToComponentCall(statement)
     }
 
     case 'ElementNode': {

@@ -27,6 +27,9 @@ exports.resolveStatementParametersExpression = function (expressions) {
  */
 exports.resolveStatement = function (statement) {
     switch (statement.type) {
+        case 'PartialStatement': {
+            return partialStatement_1.convertToComponentCall(statement);
+        }
         case 'ElementNode': {
             return elements_1.convertElement(statement);
         }
