@@ -1,4 +1,4 @@
-import { AST as Glimmer, traverse } from '@glimmer/syntax'
+import { AST as Glimmer, traverse } from '@synapse-medicine/syntax'
 import { DEFAULT_NAMESPACE_NAME }   from './constants'
 
 /**

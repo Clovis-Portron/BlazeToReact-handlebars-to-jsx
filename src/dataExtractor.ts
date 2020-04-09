@@ -1,4 +1,4 @@
-import { AST as Glimmer, visitorKeys } from '@glimmer/syntax'
+import { AST as Glimmer, visitorKeys } from '@synapse-medicine/syntax'
 
 export const extractData = (program : Glimmer.Program) => {
   const props: string[] = []

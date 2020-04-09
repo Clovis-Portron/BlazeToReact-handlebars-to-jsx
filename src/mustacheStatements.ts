@@ -1,4 +1,4 @@
-import { AST as Glimmer } from '@glimmer/syntax';
+import { AST as Glimmer } from '@synapse-medicine/syntax';
 import { resolveExpression, resolveStatementParametersExpression } from './expressions';
 
 export const resolveMustacheStatement = (statement: Glimmer.MustacheStatement | Glimmer.SubExpression) => {

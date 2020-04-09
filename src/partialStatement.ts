@@ -1,5 +1,5 @@
 import * as Babel                                          from '@babel/types'
-import { AST } from '@glimmer/syntax';
+import { AST } from '@synapse-medicine/syntax';
 import { resolveExpression } from './expressions'; 
 
 const createAttribute = (pair: AST.HashPair): Babel.JSXAttribute | null => {

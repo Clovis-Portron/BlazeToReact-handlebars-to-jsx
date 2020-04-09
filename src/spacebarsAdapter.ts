@@ -1,6 +1,6 @@
-import { AST as Glimmer } from '@glimmer/syntax';
-import '@glimmer/syntax';
-import { visitorKeys } from '@glimmer/syntax';
+import { AST as Glimmer } from '@synapse-medicine/syntax';
+import '@synapse-medicine/syntax';
+import { visitorKeys } from '@synapse-medicine/syntax';
 
 export const adaptForSpacebars = (program :  Glimmer.Program) => {
   const convert = (statements: Glimmer.Statement[]) => statements.map((statement: Glimmer.Statement) => {

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("@glimmer/syntax");
-var syntax_1 = require("@glimmer/syntax");
+require("@synapse-medicine/syntax");
+var syntax_1 = require("@synapse-medicine/syntax");
 exports.adaptForSpacebars = function (program) {
     var convert = function (statements) { return statements.map(function (statement) {
         if (statement == null)

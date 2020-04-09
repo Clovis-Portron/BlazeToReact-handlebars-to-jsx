@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var syntax_1 = require("@glimmer/syntax");
+var syntax_1 = require("@synapse-medicine/syntax");
 var Babel = require("@babel/types");
 var expressions_1 = require("./expressions");
 /**

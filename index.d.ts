@@ -1,6 +1,6 @@
 
 /* eslint-disable import/export */
-import { AST as Glimmer } from '@glimmer/syntax'
+import { AST as Glimmer } from '@synapse-medicine/syntax'
 
 /*
  * Converts Handlebars code to JSX code

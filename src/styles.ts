@@ -1,4 +1,4 @@
-import { AST as Glimmer, preprocess, print } from '@glimmer/syntax'
+import { AST as Glimmer, preprocess, print } from '@synapse-medicine/syntax'
 import * as Babel                            from '@babel/types'
 import { parseExpression }                   from '@babel/parser'
 import { createConcat, resolveStatement }    from './expressions'

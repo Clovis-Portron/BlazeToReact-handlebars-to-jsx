@@ -1,4 +1,4 @@
-import { AST as Glimmer }                                  from '@glimmer/syntax'
+import { AST as Glimmer }                                  from '@synapse-medicine/syntax'
 import * as Babel                                          from '@babel/types'
 import * as isSelfClosing                                  from 'is-self-closing'
 import * as convertHTMLAttribute                           from 'react-attr-converter'

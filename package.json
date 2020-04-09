@@ -1,6 +1,6 @@
 {
-  "name": "spacebars-to-jsx",
-  "version": "0.1.1",
+  "name": "@synapse-medicine/spacebars-to-jsx",
+  "version": "0.0.1",
   "author": "Danakt Frost <danakt@protonmail.com>",
   "license": "MIT",
   "description": "Converts Spacebars template to React component",
@@ -58,7 +58,7 @@
     "@babel/generator": "^7.5.5",
     "@babel/parser": "^7.5.5",
     "@babel/types": "^7.5.5",
-    "@glimmer/syntax": "file:../glimmer-vm/dist/@glimmer/syntax",
+    "@synapse-medicine/syntax": "^0.38.4",
     "is-self-closing": "^1.0.1",
     "react-attr-converter": "^0.3.1",
     "reserved-words": "^0.1.2"

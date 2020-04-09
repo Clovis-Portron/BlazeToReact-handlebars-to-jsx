@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var syntax_1 = require("@glimmer/syntax");
+var syntax_1 = require("@synapse-medicine/syntax");
 exports.extractData = function (program) {
     var props = [];
     var convert = function (statements) { return statements.map(function (statement) {

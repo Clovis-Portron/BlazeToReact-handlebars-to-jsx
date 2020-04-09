@@ -1,5 +1,5 @@
 /* eslint-disable import/export */
-import { AST as Glimmer }    from '@glimmer/syntax'
+import { AST as Glimmer }    from '@synapse-medicine/syntax'
 import generate              from '@babel/generator'
 import * as Babel            from '@babel/types'
 import { createProgram }     from './program'

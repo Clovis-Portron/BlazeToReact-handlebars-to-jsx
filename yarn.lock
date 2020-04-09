@@ -155,9 +155,9 @@
     "@glimmer/wire-format" "^0.38.4"
     "@simple-dom/interface" "1.4.0"
 
-"@glimmer/syntax@^0.38.4":
+"@synapse-medicine/syntax@^0.38.4":
   version "0.38.4"
-  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.38.4.tgz#eac34167cfa80daabb5db25fece1982c17a063f1"
+  resolved "https://registry.yarnpkg.com/@synapse-medicine/syntax/-/syntax-0.38.4.tgz#eac34167cfa80daabb5db25fece1982c17a063f1"
   integrity sha512-aB5vNC4ADCFXQWORFnx1kG8DtaWqS9E2zkynnj8/GqfYjO4yBtM0HFqBHAEIfcD8Zm+zK4osghs2YGrKvIsEdg==
   dependencies:
     "@glimmer/interfaces" "^0.38.4"
