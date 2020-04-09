@@ -1,6 +1,6 @@
 {
   "name": "@synapse-medicine/spacebars-to-jsx",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Danakt Frost <danakt@protonmail.com>",
   "license": "MIT",
   "description": "Converts Spacebars template to React component",

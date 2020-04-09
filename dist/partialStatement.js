@@ -12,7 +12,10 @@ var createAttribute = function (pair) {
  */
 exports.convertToComponentCall = function (statement) {
     var tagName = Babel.jsxIdentifier(statement.name.original);
-    var attributes = statement.hash.pairs.map(function (item) { return createAttribute(item); }).filter(Boolean);
+    var attributes = [];
+    if (statement.hash !== undefined) {
+        attributes = statement.hash.pairs.map(function (item) { return createAttribute(item); }).filter(Boolean);
+    }
     var isElementSelfClosing = true;
     return Babel.jsxElement(Babel.jsxOpeningElement(tagName, attributes, isElementSelfClosing), Babel.jsxClosingElement(tagName), [], isElementSelfClosing);
 };
