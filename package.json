@@ -1,9 +1,9 @@
 {
-  "name": "handlebars-to-jsx",
+  "name": "spacebars-to-jsx",
   "version": "0.1.1",
   "author": "Danakt Frost <danakt@protonmail.com>",
   "license": "MIT",
-  "description": "Converts Handlebars template to React component",
+  "description": "Converts Spacebars template to React component",
   "main": "dist/index.js",
   "scripts": {
     "watch": "tsc --watch",
@@ -55,7 +55,7 @@
     "@babel/generator": "^7.5.5",
     "@babel/parser": "^7.5.5",
     "@babel/types": "^7.5.5",
-    "@glimmer/syntax": "file:../../glimmer-vm/dist/@glimmer/syntax",
+    "@glimmer/syntax": "file:../glimmer-vm/dist/@glimmer/syntax",
     "is-self-closing": "^1.0.1",
     "react-attr-converter": "^0.3.1",
     "reserved-words": "^0.1.2"
