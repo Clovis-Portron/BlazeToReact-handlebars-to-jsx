@@ -23,6 +23,9 @@
   "bugs": {
     "url": "https://github.com/danakt/handlebars-to-jsx/issues"
   },
+  "publishConfig": {
+    "@synapse-medicine:registry": "https://gitlab.com/api/v4/projects/7004367/packages/npm/"
+  },
   "homepage": "https://github.com/danakt/handlebars-to-jsx",
   "typings": "index.d.ts",
   "devDependencies": {
