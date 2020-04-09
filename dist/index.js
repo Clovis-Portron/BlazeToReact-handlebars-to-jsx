@@ -26,3 +26,5 @@ function compile(hbsCode, options) {
     return generator_1.default(babelProgram).code;
 }
 exports.compile = compile;
+var dataExtractor_1 = require("./dataExtractor");
+exports.extractData = dataExtractor_1.extractData;

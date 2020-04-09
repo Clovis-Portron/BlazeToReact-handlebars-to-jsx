@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("@glimmer/syntax");
 var syntax_1 = require("@glimmer/syntax");
-exports.adaptForSpacebars = function (program) {
+exports.extractData = function (program) {
+    var props = [];
     var convert = function (statements) { return statements.map(function (statement) {
         if (statement == null)
             return statement;
+        if (statement.type === 'PathExpression') {
+            props.push(statement.parts[0]);
+        }
         var keys = syntax_1.visitorKeys[statement.type];
-        // Gestion du tag template
-        /*if(statement.type == 'ElementNode' && statement.tag === 'template') {
-          statement.tag = 'div';
-        }*/
+        var pathIndex = keys.findIndex(function (k) { return k === 'path'; });
+        if (pathIndex !== -1)
+            keys.splice(pathIndex, 1);
         keys.forEach(function (key) {
             if (Array.isArray(statement[key])) {
                 statement[key] = convert(statement[key]);
@@ -22,6 +24,5 @@ exports.adaptForSpacebars = function (program) {
         return statement;
     }); };
     program.body = convert(program.body);
-    //console.log(JSON.stringify(program.body, null, 2));
-    return program;
+    return props;
 };

@@ -1,7 +1,6 @@
 import { AST as Glimmer } from '@glimmer/syntax';
 import '@glimmer/syntax';
 import { visitorKeys } from '@glimmer/syntax';
-import { isArray } from 'util';
 
 export const adaptForSpacebars = (program :  Glimmer.Program) => {
   const convert = (statements: Glimmer.Statement[]) => statements.map((statement: Glimmer.Statement) => {
@@ -14,7 +13,7 @@ export const adaptForSpacebars = (program :  Glimmer.Program) => {
     }*/
     
     keys.forEach((key: string) => {
-      if(isArray((<any>statement)[key])) {
+      if(Array.isArray((<any>statement)[key])) {
         (<any>statement)[key] = convert((<any>statement)[key]);
       } else {
         (<any>statement)[key] = convert([(<any>statement)[key]])[0];

@@ -31,3 +31,5 @@ export function compile(
   if (options.isJSX) return babelProgram
   return generate(babelProgram).code
 }
+
+export { extractData } from './dataExtractor'

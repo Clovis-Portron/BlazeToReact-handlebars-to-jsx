@@ -1,16 +1,8 @@
 
 /* eslint-disable import/export */
+import { AST as Glimmer } from '@glimmer/syntax'
 
-/**
- * Converts Handlebars code to JSX code
- * @param hbsCode Handlebars code to JSX
- * @param options Compilation options
- * @param [isComponent] Should return JSX code wrapped as a function component
- * @returns JSX code
- */
-export function compile(hbsCode: string, isComponent?: boolean): string
-
-/**
+/*
  * Converts Handlebars code to JSX code
  * @param hbsCode Handlebars code to JSX
  * @param options Compilation options
@@ -19,4 +11,6 @@ export function compile(hbsCode: string, isComponent?: boolean): string
  * @param [options.includeImport] Should include react import
  * @returns JSX code
  */
-export function compile(hbsCode: string, options?: { isComponent?: boolean; isModule?: boolean, includeImport?: boolean, isJSX?: boolean }): string | object
+export function compile(hbsCode: Glimmer.Program, options?: { isComponent?: boolean; isModule?: boolean, includeImport?: boolean, isJSX?: boolean }): string | object
+
+export function extractData(program: Glimmer.Program): string[]
