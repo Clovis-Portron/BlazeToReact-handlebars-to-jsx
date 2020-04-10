@@ -10,9 +10,11 @@ exports.extractData = function (program) {
             props.push(statement.parts[0]);
         }
         var keys = syntax_1.visitorKeys[statement.type];
-        var pathIndex = keys.findIndex(function (k) { return k === 'path'; });
-        if (pathIndex !== -1)
-            keys.splice(pathIndex, 1);
+        if (statement.type === 'BlockStatement') {
+            var pathIndex = keys.findIndex(function (k) { return k === 'path'; });
+            if (pathIndex !== -1)
+                keys.splice(pathIndex, 1);
+        }
         keys.forEach(function (key) {
             if (Array.isArray(statement[key])) {
                 statement[key] = convert(statement[key]);

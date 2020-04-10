@@ -10,8 +10,10 @@ export const extractData = (program : Glimmer.Program) => {
     }
 
     const keys = visitorKeys[statement.type]
-    const pathIndex = keys.findIndex((k: string) => k === 'path')
-    if (pathIndex !== -1) keys.splice(pathIndex, 1)
+    if (statement.type === 'BlockStatement') {
+      const pathIndex = keys.findIndex((k: string) => k === 'path')
+      if (pathIndex !== -1) keys.splice(pathIndex, 1)
+    }
 
     keys.forEach((key: string) => {
       if (Array.isArray((<any>statement)[key])) {
