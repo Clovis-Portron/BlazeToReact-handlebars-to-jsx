@@ -47,8 +47,19 @@ exports.createConditionStatement = function (blockStatement, invertCondition) {
  * Creates each block statement
  */
 exports.createEachStatement = function (blockStatement) {
-    var pathExpression = blockStatement.params[0];
-    var iterator = expressions_1.appendToPath(expressions_1.createPath(pathExpression), Babel.identifier('map'));
+    var iterator = null;
+    var namespace = Babel.identifier(constants_1.DEFAULT_NAMESPACE_NAME);
+    // We have something like #each entries
+    if (blockStatement.params.length <= 1) {
+        var pathExpression = blockStatement.params[0];
+        iterator = expressions_1.appendToPath(expressions_1.createPath(pathExpression), Babel.identifier('map'));
+    }
+    else if (blockStatement.params.length == 3) // We have something like #each entry in entries
+     {
+        namespace = Babel.identifier(blockStatement.params[0].original);
+        var pathExpression = blockStatement.params[2];
+        iterator = expressions_1.appendToPath(expressions_1.createPath(pathExpression), Babel.identifier('map'));
+    }
     var mapCallbackChildren = expressions_1.createRootChildren(blockStatement.program.body);
     // If top-level child element is JS expression, wrap into fragment to add
     // the "key" attribute.
@@ -57,6 +68,6 @@ exports.createEachStatement = function (blockStatement) {
         : mapCallbackChildren;
     // Adding the "key" attribute to child element
     wrappedCallbackChildren.openingElement.attributes.push(Babel.jsxAttribute(Babel.jsxIdentifier('key'), Babel.jsxExpressionContainer(Babel.identifier(constants_1.DEFAULT_KEY_NAME))));
-    var mapCallback = Babel.arrowFunctionExpression([Babel.identifier(constants_1.DEFAULT_NAMESPACE_NAME), Babel.identifier(constants_1.DEFAULT_KEY_NAME)], wrappedCallbackChildren);
+    var mapCallback = Babel.arrowFunctionExpression([namespace, Babel.identifier(constants_1.DEFAULT_KEY_NAME)], wrappedCallbackChildren);
     return Babel.callExpression(iterator, [mapCallback]);
 };

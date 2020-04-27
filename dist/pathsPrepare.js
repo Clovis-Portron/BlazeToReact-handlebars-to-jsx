@@ -6,11 +6,12 @@ var constants_1 = require("./constants");
  * Checks is each statement
  */
 var isEachStatement = function (node) {
-    return node.type === 'BlockStatement' && node.path.original === 'each';
+    return node.type === 'BlockStatement' && node.path.original === 'each' && node.params.length === 1;
 };
+// if "each" is "each in", it will return false
 /**
- * Creates stack of namespaces
- */
+* Creates stack of namespaces
+*/
 var createNamespaceStack = function () {
     var namespaces = [];
     return {
