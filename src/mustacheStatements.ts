@@ -2,8 +2,8 @@ import { AST as Glimmer } from '@synapse-medicine/syntax';
 import { resolveExpression, resolveStatementParametersExpression } from './expressions';
 
 export const resolveMustacheStatement = (statement: Glimmer.MustacheStatement | Glimmer.SubExpression) => {
-  if(statement.params.length > 0) {
-    return resolveStatementParametersExpression([statement.path, ...statement.params]);
+  if (statement.params.length > 0) {
+    return resolveStatementParametersExpression([statement.path, ...statement.params])
   }
-  return resolveExpression(statement.path);
-};
+  return resolveExpression(statement.path)
+}

@@ -65,8 +65,18 @@ export const createConditionStatement = (
  * Creates each block statement
  */
 export const createEachStatement = (blockStatement: Glimmer.BlockStatement) => {
-  const pathExpression = blockStatement.params[0] as Glimmer.PathExpression
-  const iterator = appendToPath(createPath(pathExpression), Babel.identifier('map'))
+  let iterator = null;
+  let namespace: Babel.Identifier = Babel.identifier(DEFAULT_NAMESPACE_NAME);
+  // We have something like #each entries
+  if(blockStatement.params.length <= 1) {
+    const pathExpression = blockStatement.params[0] as Glimmer.PathExpression
+    iterator = appendToPath(createPath(pathExpression), Babel.identifier('map'))
+  } else if(blockStatement.params.length == 3) // We have something like #each entry in entries
+  {
+    namespace = Babel.identifier((<Glimmer.PathExpression>blockStatement.params[0]).original);
+    const pathExpression = blockStatement.params[2] as Glimmer.PathExpression
+    iterator = appendToPath(createPath(pathExpression), Babel.identifier('map'))
+  }
 
   const mapCallbackChildren = createRootChildren(blockStatement.program.body)
 
@@ -82,9 +92,9 @@ export const createEachStatement = (blockStatement: Glimmer.BlockStatement) => {
   )
 
   const mapCallback = Babel.arrowFunctionExpression(
-    [Babel.identifier(DEFAULT_NAMESPACE_NAME), Babel.identifier(DEFAULT_KEY_NAME)],
+    [namespace, Babel.identifier(DEFAULT_KEY_NAME)],
     wrappedCallbackChildren
   )
 
-  return Babel.callExpression(iterator, [mapCallback])
+  return Babel.callExpression(<Babel.MemberExpression>iterator, [mapCallback])
 }
