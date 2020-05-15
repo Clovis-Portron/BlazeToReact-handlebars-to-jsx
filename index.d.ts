@@ -9,8 +9,13 @@ import { AST as Glimmer } from '@synapse-medicine/syntax'
  * @param [options.isComponent] Should return JSX code wrapped as a function component
  * @param [options.isModule] Should return generated code exported as default
  * @param [options.includeImport] Should include react import
- * @returns JSX code
+ * @param [options.onlyAST] Should only return JSX AST, not JSX
+ * @returns JSX code or JSX AST tree
  */
-export function compile(hbsCode: Glimmer.Program, options?: { isComponent?: boolean; isModule?: boolean, includeImport?: boolean, isJSX?: boolean }): string | object
+export function compile(hbsCode: Glimmer.Program, options?: {
+  isComponent?: boolean;
+  isModule?: boolean,
+  includeImport?: boolean,
+  onlyAST?: boolean }): string | object
 
 export function extractData(program: Glimmer.Program): string[]

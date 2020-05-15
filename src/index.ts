@@ -15,7 +15,7 @@ import { adaptForSpacebars } from './spacebarsAdapter'
  */
 export function compile(
   hbsCode: Glimmer.Program,
-  options: { isComponent?: boolean; isModule?: boolean; includeImport?: boolean; isJSX?: boolean }
+  options: { isComponent?: boolean; isModule?: boolean; includeImport?: boolean; onlyAST?: boolean }
 ): string | any {
   const isComponent = !!options.isComponent
   const isModule = !!options.isModule
@@ -28,7 +28,7 @@ export function compile(
   // return JSON.stringify(glimmerProgram);
   const babelProgram: Babel.Program = createProgram(glimmerProgram, isComponent, isModule, includeImport)
 
-  if (options.isJSX) return babelProgram
+  if (options.onlyAST) return babelProgram
   return generate(babelProgram).code
 }
 
